@@ -1,0 +1,35 @@
+<!-- res/drawable/button_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Normal state -->
+    <item android:state_enabled="true">
+        <layer-list>
+            <!-- Background shape with gradient -->
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="8dp" /> <!-- Adjust corner radius as needed -->
+                    <gradient
+                        android:startColor="#FB8920"/> <!-- Adjust angle as needed -->
+                </shape>
+            </item>
+            <item android:right="1dp" android:left="1dp" android:top="1dp" android:bottom="1dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="8dp" /> <!-- Adjust corner radius to match the background shape -->
+                    <solid android:color="#00000000" /> <!-- Transparent color for no border -->
+                    <stroke
+                        android:width="2dp"
+                        android:color="#000000" /> <!-- Adjust border width and color as needed -->
+                </shape>
+            </item>
+
+            <!-- Border for the button -->
+
+        </layer-list>
+    </item>
+
+    <!-- Disabled state -->
+    <item android:state_enabled="false">
+        <color android:color="#A0A0A0" /> <!-- Adjust the color for disabled state as needed -->
+    </item>
+
+</selector>
