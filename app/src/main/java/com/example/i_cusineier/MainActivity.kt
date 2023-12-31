@@ -31,6 +31,15 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, Cookingguide::class.java)
             startActivity(intent)
         }
+        val button3 :ImageButton = findViewById(R.id.button3);
+        button3.setOnClickListener {
+            // Apply a fade-in animation to the button
+            applyClickEffect(button3)
+
+            // Redirect to the SecondActivity
+            val intent = Intent(this@MainActivity, MyRecipes::class.java)
+            startActivity(intent)
+        }
     }
 
     // Method to apply a fade-in animation to a view

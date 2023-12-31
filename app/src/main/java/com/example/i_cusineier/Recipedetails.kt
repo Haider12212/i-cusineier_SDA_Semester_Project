@@ -1,10 +1,12 @@
 package com.example.i_cusineier
 
+import MyPreferences
 import Recipe
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +33,7 @@ class Recipedetails:AppCompatActivity() {
         instructionRecyclerView.layoutManager = layoutManager
 
         val viewInstruction: Button = findViewById(R.id.viewInstructionsButton)
+        val saveRecipe:Button = findViewById(R.id.SaveRecipeButton)
 
         val recipeString = intent.getStringExtra("recipe")
         if (recipeString != null) {
@@ -73,8 +76,43 @@ class Recipedetails:AppCompatActivity() {
 
                 recipeObj.getInstruction(recipeId)
             }
+            saveRecipe.setOnClickListener {
+                val recipeTitle = recipe.optString("title")
+                val recipeImage = recipe.optString("image")
+
+                val recipeObj = Recipe(object : Recipe.RecipeCallback {
+                    override fun onRecipeReceived(recipes: JSONArray) {
+                        // Inside Recipe_Details_Activity
+                        runOnUiThread {
+                            val steps = getStepsFromJson(recipes)
+
+                            // Here you can replace "Recipe instructions go here" with the actual logic to convert steps to a string
+                            val recipeInstructions = steps
+
+                            // Save the recipe details, including the instructions
+                            MyPreferences.saveRecipeDetails(this@Recipedetails, recipeTitle, recipeImage, recipeInstructions)
+
+                            // Display a toast indicating that the data has been saved successfully
+                            Toast.makeText(this@Recipedetails, "Recipe details saved successfully", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(error: String) {
+                        // Handle failure, if needed
+                        // You can display another toast here if the data saving fails
+                        Toast.makeText(this@Recipedetails, "Failed to save recipe details", Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+                recipeObj.getInstruction(recipeId)
+            }
+
+
+
         }
+
     }
+
 
     private fun getStepsFromJson(recipe: JSONArray): List<JSONObject> {
         val stepsList = mutableListOf<JSONObject>()

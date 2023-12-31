@@ -6,6 +6,7 @@
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
+    android:background="@drawable/gradient"
     android:paddingBottom="16dp"
     tools:context=".Recipedetails">
     <LinearLayout
@@ -32,14 +33,6 @@
             android:textSize="24sp"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/detailsCaloriesTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/detailsTitleTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"/>
         <Button
             android:id="@+id/viewInstructionsButton"
             android:layout_width="wrap_content"
@@ -48,6 +41,14 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:text="View Instructions"/>
+        <Button
+            android:id="@+id/SaveRecipeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailsThumbnailImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Save Recipe"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/stepsRecyclerView"
             android:layout_width="match_parent"
