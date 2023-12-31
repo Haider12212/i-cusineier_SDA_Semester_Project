@@ -1,11 +1,19 @@
+import android.util.Log
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.json.JSONArray
 import java.io.IOException
 
-class Recipe {
+class Recipe(private val callback: RecipeCallback) {
+
+    interface RecipeCallback {
+        fun onRecipeReceived(recipes: JSONArray)
+        fun onFailure(error: String)
+    }
+
     fun getRecipe(ingredients: String) {
         val client = OkHttpClient()
 
@@ -18,14 +26,20 @@ class Recipe {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                // Handle failure
+                callback.onFailure(e.message ?: "Unknown error")
             }
 
             override fun onResponse(call: Call, response: Response) {
-                // Handle response
                 if (response.isSuccessful) {
-                    val responseBody = response.body?.string()
-                    // Process the responseBody as needed
+                    try {
+                        val responseBody = response.body?.string()
+                        val recipes = JSONArray(responseBody)
+                        callback.onRecipeReceived(recipes)
+                    } catch (e: Exception) {
+                        callback.onFailure("Error parsing response")
+                    }
+                } else {
+                    callback.onFailure("Request failed with code ${response.code}")
                 }
             }
         })
