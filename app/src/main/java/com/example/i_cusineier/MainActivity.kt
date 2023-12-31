@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.Button
 import android.widget.ImageButton
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             applyClickEffect(button2)
 
             // Redirect to the SecondActivity
-            val intent = Intent(this@MainActivity, cooking_guide::class.java)
+            val intent = Intent(this@MainActivity, Cookingguide::class.java)
             startActivity(intent)
         }
     }

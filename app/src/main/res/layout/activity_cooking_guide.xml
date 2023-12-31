@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gradient"
-    tools:context=".cooking_guide">
+    tools:context=".Cookingguide">
 
     <EditText
         android:id="@+id/searchEditText"

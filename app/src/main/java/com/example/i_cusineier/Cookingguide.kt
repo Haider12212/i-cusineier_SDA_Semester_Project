@@ -16,7 +16,7 @@ import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONObject
 
-class cooking_guide : AppCompatActivity(),RecipeAdapter.OnRecipeItemClickListener {
+class Cookingguide : AppCompatActivity(),RecipeAdapter.OnRecipeItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
 
@@ -47,15 +47,15 @@ class cooking_guide : AppCompatActivity(),RecipeAdapter.OnRecipeItemClickListene
                 override fun onRecipeReceived(recipes: JSONArray) {
                     // Handle the received recipes
                     runOnUiThread {
-                        val adapter = RecipeAdapter(this@cooking_guide, recipes)
-                        adapter.setOnRecipeItemClickListener(this@cooking_guide)
+                        val adapter = RecipeAdapter(this@Cookingguide, recipes)
+                        adapter.setOnRecipeItemClickListener(this@Cookingguide)
                         recyclerView.adapter = adapter
                     }
                 }
 
                 override fun onFailure(error: String) {
                     runOnUiThread {
-                        Toast.makeText(this@cooking_guide, "Request failed: $error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@Cookingguide, "Request failed: $error", Toast.LENGTH_SHORT).show()
                     }
                 }
             })
@@ -66,7 +66,7 @@ class cooking_guide : AppCompatActivity(),RecipeAdapter.OnRecipeItemClickListene
     }
 
     override fun onRecipeItemClick(recipe: JSONObject) {
-        val intent = Intent(this, Recipe_Details_Activity::class.java)
+        val intent = Intent(this, Recipedetails::class.java)
 
         // Pass the recipe details to the new activity
         intent.putExtra("recipe", recipe.toString())
