@@ -3,7 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:background="#F6B93B"
+    android:padding="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
 
     <ImageView
         android:id="@+id/thumbnailImageView"
@@ -11,7 +16,7 @@
         android:layout_height="60dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_background"
-    android:contentDescription="Thumbnail" />
+        android:contentDescription="Thumbnail" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,7 +38,7 @@
             android:layout_height="wrap_content"
             android:textStyle="normal|italic"
             android:textSize="16sp"
-            android:text="Recipe Calories" />
+            android:text=" Likes: " />
 
         <!-- Add other text views or views as needed -->
 

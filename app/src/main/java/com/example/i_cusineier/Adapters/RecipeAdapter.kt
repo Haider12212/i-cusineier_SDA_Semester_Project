@@ -12,8 +12,9 @@ import org.json.JSONObject
 
 class RecipeAdapter(private val context: Context, private val recipes: JSONArray) :
     RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
+    private var listener: OnRecipeItemClickListener? = null
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View,) : RecyclerView.ViewHolder(itemView) {
         val thumbnailImageView: ImageView = itemView.findViewById(R.id.thumbnailImageView)
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         val caloriesTextView: TextView = itemView.findViewById(R.id.caloriesTextView)
@@ -36,17 +37,24 @@ class RecipeAdapter(private val context: Context, private val recipes: JSONArray
 
         holder.titleTextView.text = recipe.getString("title")
 
-        // Extract nutrition information
-        val nutrientsArray = recipe.getJSONArray("Nutrients")
+        // Set the click listener for the item
+        holder.itemView.setOnClickListener {
+            listener?.onRecipeItemClick(recipe)
+        }
 
-        // Assuming "calories" is one of the nutrients
-        val nutrientsJSONObject = nutrientsArray.getJSONObject(0)
-        val calories = nutrientsJSONObject.getString("amount")
-        holder.caloriesTextView.setText(calories);
-
+       holder.caloriesTextView.text = "Likes:" + recipe.getString("likes")
     }
+    fun setOnRecipeItemClickListener(listener: OnRecipeItemClickListener) {
+        this.listener = listener
+    }
+
 
     override fun getItemCount(): Int {
         return recipes.length()
     }
+
+    interface OnRecipeItemClickListener {
+        fun onRecipeItemClick(recipe: JSONObject)
+    }
+
 }
