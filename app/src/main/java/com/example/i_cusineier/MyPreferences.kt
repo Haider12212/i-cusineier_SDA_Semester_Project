@@ -1,4 +1,5 @@
 import android.content.Context
+import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -95,6 +96,40 @@ object MyPreferences {
 
         return recipes
     }
+    // Delete a specific recipe from SharedPreferences
+    fun deleteRecipe(context: Context, position: Int) {
+        val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+
+        // Get the current size of the saved recipes
+        val currentSize = preferences.getInt(KEY_RECIPE_SIZE, 0)
+
+        // Check if the position is within the bounds of the saved recipes
+        if (position in 0 until currentSize) {
+            // Remove the data associated with the specified position
+            editor.remove(KEY_RECIPE_NAME + position)
+            editor.remove(KEY_RECIPE_IMAGE_URL + position)
+            editor.remove(KEY_RECIPE_INSTRUCTIONS + position)
+
+            // Decrement the size of the saved recipes
+            editor.putInt(KEY_RECIPE_SIZE, currentSize - 1)
+
+            // Shift the data for positions greater than the deleted position
+            for (i in position until currentSize - 1) {
+                val nextRecipeName = preferences.getString(KEY_RECIPE_NAME + (i + 1), "")
+                val nextImageUrl = preferences.getString(KEY_RECIPE_IMAGE_URL + (i + 1), "")
+                val nextInstructions = preferences.getString(KEY_RECIPE_INSTRUCTIONS + (i + 1), "")
+
+                editor.putString(KEY_RECIPE_NAME + i, nextRecipeName)
+                editor.putString(KEY_RECIPE_IMAGE_URL + i, nextImageUrl)
+                editor.putString(KEY_RECIPE_INSTRUCTIONS + i, nextInstructions)
+            }
+
+            // Apply the changes
+            editor.apply()
+        }
+    }
+
 
 // ...
 

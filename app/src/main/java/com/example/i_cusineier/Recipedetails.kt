@@ -3,8 +3,10 @@ package com.example.i_cusineier
 import MyPreferences
 import Recipe
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -18,6 +20,7 @@ import org.json.JSONObject
 
 class Recipedetails:AppCompatActivity() {
     private lateinit var instructionRecyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +29,7 @@ class Recipedetails:AppCompatActivity() {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
+        progressBar = findViewById(R.id.progressBar2)
 
         // Get recipe details from the intent
         instructionRecyclerView = findViewById(R.id.stepsRecyclerView)
@@ -55,12 +59,14 @@ class Recipedetails:AppCompatActivity() {
 
             val placeholderAdapter = RecipeInstructionAdapter(this, emptyList())
             instructionRecyclerView.adapter = placeholderAdapter
-
+            progressBar.visibility = View.GONE
             viewInstruction.setOnClickListener {
+                progressBar.visibility = View.VISIBLE
                 val recipeObj = Recipe(object : Recipe.RecipeCallback {
                     override fun onRecipeReceived(recipes: JSONArray) {
                         // Inside Recipe_Details_Activity
                         runOnUiThread {
+                            progressBar.visibility = View.GONE
                             val steps = getStepsFromJson(recipes)
                             val adapter = RecipeInstructionAdapter(this@Recipedetails, steps)
                             instructionRecyclerView.adapter = adapter

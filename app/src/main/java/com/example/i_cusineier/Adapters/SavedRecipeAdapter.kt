@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.json.JSONObject
@@ -15,6 +17,7 @@ class SavedRecipeAdapter(private val context: Context,private val recipes: List<
         val recipeName: TextView = itemView.findViewById(R.id.recipeNameTextView)
         val recipeImage: ImageView = itemView.findViewById(R.id.recipeImageTextView)
         val instructions: TextView = itemView.findViewById(R.id.instructionsTextView)
+        val deletebutton:Button = itemView.findViewById(R.id.deleteButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +34,13 @@ class SavedRecipeAdapter(private val context: Context,private val recipes: List<
             .into(holder.recipeImage)
 
         holder.recipeName.text = recipe.recipeName
+        holder.deletebutton.setOnClickListener {
+            // Call the delete function when the delete button is clicked
+            MyPreferences.deleteRecipe(context, position)
+            // Notify the adapter that the data has changed
+            notifyItemRemoved(position)
 
+        }
         val instructionsList = recipe.instructions
 
         if (instructionsList.isNotEmpty()) {
